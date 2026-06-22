@@ -142,28 +142,46 @@
         </button>
       </div>
 
-      <!-- Verification Link Button -->
-      <div id="verify-container" class="hidden pt-6 mt-4 border-t border-white/10">
+      <!-- Verification Workflow -->
+      <div id="verify-container" class="hidden pt-6 mt-4 border-t border-white/10 space-y-4">
         
-        <!-- Step 1: Login to Google -->
-        <a href="https://accounts.google.com/AccountChooser" target="_blank" class="btn-copy w-full flex items-center justify-center gap-2 p-4 rounded-xl text-white font-semibold text-base mb-4 relative overflow-hidden group border border-white/10">
-          <span class="relative z-10">Шаг 1: Войти в аккаунт Google</span>
-          <i data-lucide="log-in" class="w-5 h-5 relative z-10 text-white/50 group-hover:text-white transition-colors"></i>
+        <p class="text-xs text-white/50 text-center mb-2">Для обхода СМС-защиты нужен официальный Google</p>
+
+        <!-- Step 1: Install Apps -->
+        <div class="bg-white/5 rounded-xl p-3 border border-white/5">
+          <p class="text-[10px] uppercase tracking-wider text-white/50 font-semibold mb-2 ml-1">Шаг 1: Установите приложение Google</p>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="https://apps.apple.com/app/google/id284815942" target="_blank" class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg transition-colors text-xs text-white">
+              <i data-lucide="apple" class="w-4 h-4"></i> iOS
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox" target="_blank" class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg transition-colors text-xs text-white">
+              <i data-lucide="play" class="w-4 h-4"></i> Android
+            </a>
+          </div>
+        </div>
+
+        <!-- Step 2: Login to Google -->
+        <a href="googleapp://" target="_blank" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden group border border-white/10">
+          <div class="flex items-center gap-3 relative z-10 w-full">
+            <i data-lucide="log-in" class="w-5 h-5 text-accent"></i>
+            <span class="flex-1 text-left">Шаг 2: Войти в Google</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-white/30"></i>
+          </div>
         </a>
 
-        <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-3 mb-4 flex items-start gap-3">
+        <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-3 flex items-start gap-3">
           <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
           <p class="text-xs text-white/80 leading-relaxed">
-            <strong class="text-red-400">ВАЖНО:</strong> Чтобы телефон не открыл приложение YouTube, 
-            <strong class="text-white">зажмите</strong> кнопку ниже пальцем и выберите 
+            <strong class="text-red-400">ВАЖНО:</strong> Чтобы телефон не открыл YouTube, 
+            <strong class="text-white">зажмите</strong> кнопку ниже и выберите 
             <strong class="text-white">«Открыть в новой вкладке»</strong>.
           </p>
         </div>
         
-        <!-- Step 2: Verification -->
+        <!-- Step 3: Verification -->
         <a id="verify-link" href="#" target="_blank" class="btn-primary w-full flex items-center justify-center gap-2 p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group">
           <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-          <span class="relative z-10">Шаг 2: Подтвердить вход</span>
+          <span class="relative z-10">Шаг 3: Подтвердить вход</span>
           <i data-lucide="check-circle" class="w-5 h-5 relative z-10"></i>
         </a>
       </div>
