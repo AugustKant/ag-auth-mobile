@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AG Auth - Ассистент</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- OTP Auth library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.2.2/otpauth.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #8b5cf6;
+      --accent: #ec4899;
+      --bg-color: #0f0f13;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+    }
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.2s;
+    }
+    .btn-copy:active {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(0.98);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .btn-primary:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+  <div id="error-container" class="hidden text-center max-w-sm w-full">
+    <i data-lucide="alert-circle" class="w-16 h-16 text-red-500 mx-auto mb-4"></i>
+    <h1 class="text-2xl font-bold text-white mb-2">Ошибка данных</h1>
+    <p class="text-white/60 mb-8 text-sm">Не удалось прочитать данные. Пожалуйста, отсканируйте QR-код заново.</p>
+  </div>
+
+  <div id="app-container" class="hidden glass-panel p-6 max-w-sm w-full relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#6366f1] via-[#8b5cf6] to-[#ec4899]"></div>
+    
+    <div class="text-center mb-8 pt-2">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 mb-4 shadow-inner border border-white/10">
+        <i data-lucide="smartphone" class="w-8 h-8 text-white/80"></i>
+      </div>
+      <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Мобильный Ассистент</h1>
+      <p class="text-white/50 text-sm">Скопируйте данные для авторизации</p>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Email Field -->
+      <div>
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Google Email</label>
+        <button onclick="copyData('email')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
+          <div class="flex items-center gap-3 relative z-10 w-full">
+            <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+            <span id="email-text" class="text-white text-left font-medium truncate flex-1"></span>
+            <div id="email-icon">
+              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Password Field -->
+      <div>
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Пароль</label>
+        <button onclick="copyData('pass')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
+          <div class="flex items-center gap-3 relative z-10 w-full">
+            <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+            <span class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
+            <div id="pass-icon">
+              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Firstmail Email Field -->
+      <div id="fe-container" class="hidden">
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Firstmail Email</label>
+        <button onclick="copyData('fe')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
+          <div class="flex items-center gap-3 relative z-10 w-full">
+            <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+            <span id="fe-text" class="text-white text-left font-medium truncate flex-1"></span>
+            <div id="fe-icon">
+              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Firstmail Pass Field -->
+      <div id="fp-container" class="hidden">
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Firstmail Пароль</label>
+        <button onclick="copyData('fp')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
+          <div class="flex items-center gap-3 relative z-10 w-full">
+            <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+            <span class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
+            <div id="fp-icon">
+              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- TOTP Code Field -->
+      <div id="t-container" class="hidden">
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 flex items-center justify-between">
+          <span>2FA Код</span>
+          <span id="totp-timer" class="text-[10px] text-accent font-mono">30s</span>
+        </label>
+        <div class="relative w-full h-1 bg-white/10 rounded-t-lg overflow-hidden mb-[-1px] z-20">
+           <div id="totp-progress" class="h-full bg-accent transition-all duration-1000 ease-linear" style="width: 100%"></div>
+        </div>
+        <button onclick="copyData('t')" class="btn-copy w-full flex items-center justify-between p-4 rounded-b-xl border border-white/5 relative overflow-hidden group">
+          <div class="flex items-center gap-3 relative z-10 w-full">
+            <i data-lucide="shield" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+            <span id="totp-text" class="text-white font-mono text-2xl tracking-[0.3em] text-left flex-1">------</span>
+            <div id="t-icon">
+              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Verification Link Button -->
+      <div id="verify-container" class="hidden pt-6 mt-4 border-t border-white/10">
+        <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-3 mb-4 flex items-start gap-3">
+          <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
+          <p class="text-xs text-white/80 leading-relaxed">
+            <strong class="text-red-400">ВАЖНО:</strong> Чтобы телефон не открыл приложение YouTube, 
+            <strong class="text-white">зажмите</strong> кнопку ниже пальцем и выберите 
+            <strong class="text-white">«Открыть в новой вкладке»</strong>.
+          </p>
+        </div>
+        <a id="verify-link" href="#" target="_blank" class="btn-primary w-full flex items-center justify-center gap-2 p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group">
+          <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+          <span class="relative z-10">Шаг 2: Пройти верификацию</span>
+          <i data-lucide="external-link" class="w-5 h-5 relative z-10"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize icons
+    lucide.createIcons();
+
+    let authData = { e: '', p: '', fe: '', fp: '', t: '', u: '' };
+    let currentTotpToken = '';
+
+    function init() {
+      try {
+        const hash = window.location.hash.substring(1);
+        if (!hash) throw new Error("No hash");
+        
+        const decodedStr = decodeURIComponent(escape(window.atob(hash)));
+        authData = JSON.parse(decodedStr);
+
+        document.getElementById('email-text').textContent = authData.e || 'Не указан';
+        
+        if (authData.fe) {
+          document.getElementById('fe-container').classList.remove('hidden');
+          document.getElementById('fe-text').textContent = authData.fe;
+        }
+        if (authData.fp) {
+          document.getElementById('fp-container').classList.remove('hidden');
+        }
+        if (authData.t) {
+          document.getElementById('t-container').classList.remove('hidden');
+          startTotpGenerator(authData.t);
+        }
+        
+        if (authData.u) {
+          document.getElementById('verify-container').classList.remove('hidden');
+          document.getElementById('verify-link').href = authData.u;
+        }
+
+        document.getElementById('app-container').classList.remove('hidden');
+        
+        history.replaceState(null, null, ' ');
+      } catch (err) {
+        console.error(err);
+        document.getElementById('error-container').classList.remove('hidden');
+      }
+    }
+
+    function startTotpGenerator(secret) {
+      // Create a new TOTP object
+      let totp;
+      try {
+        // Handle URL formatted secrets (otpauth://totp/...)
+        if (secret.startsWith('otpauth://')) {
+          totp = OTPAuth.URI.parse(secret);
+        } else {
+          totp = new OTPAuth.TOTP({
+            secret: OTPAuth.Secret.fromBase32(secret.replace(/\s+/g, '').toUpperCase())
+          });
+        }
+      } catch (e) {
+        document.getElementById('totp-text').textContent = 'Ошибка';
+        return;
+      }
+
+      function updateTotp() {
+        const token = totp.generate();
+        currentTotpToken = token;
+        document.getElementById('totp-text').textContent = token;
+        
+        // Calculate remaining seconds
+        const epoch = Math.round(new Date().getTime() / 1000.0);
+        const remaining = 30 - (epoch % 30);
+        
+        document.getElementById('totp-timer').textContent = remaining + 's';
+        
+        // Update progress bar
+        const percentage = (remaining / 30) * 100;
+        const progressEl = document.getElementById('totp-progress');
+        progressEl.style.width = percentage + '%';
+        
+        if (remaining <= 5) {
+          progressEl.classList.add('bg-red-500');
+          progressEl.classList.remove('bg-accent');
+          document.getElementById('totp-timer').classList.add('text-red-500');
+          document.getElementById('totp-timer').classList.remove('text-accent');
+        } else {
+          progressEl.classList.remove('bg-red-500');
+          progressEl.classList.add('bg-accent');
+          document.getElementById('totp-timer').classList.remove('text-red-500');
+          document.getElementById('totp-timer').classList.add('text-accent');
+        }
+      }
+
+      updateTotp();
+      setInterval(updateTotp, 1000);
+    }
+
+    function copyData(type) {
+      let textToCopy = '';
+      if (type === 'email') textToCopy = authData.e;
+      else if (type === 'pass') textToCopy = authData.p;
+      else if (type === 'fe') textToCopy = authData.fe;
+      else if (type === 'fp') textToCopy = authData.fp;
+      else if (type === 't') textToCopy = currentTotpToken || authData.t;
+
+      if (!textToCopy) return;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // Visual feedback
+        const iconContainer = document.getElementById(`${type}-icon`);
+        const originalHtml = iconContainer.innerHTML;
+        
+        iconContainer.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-green-400"></i>';
+        lucide.createIcons();
+
+        // Android haptic feedback if available
+        if (navigator.vibrate) navigator.vibrate(50);
+
+        setTimeout(() => {
+          iconContainer.innerHTML = originalHtml;
+          lucide.createIcons();
+        }, 1500);
+      });
+    }
+
+    // Run on load
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
