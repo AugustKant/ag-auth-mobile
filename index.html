@@ -148,57 +148,80 @@
         <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-3 flex items-start gap-3">
           <i data-lucide="info" class="w-5 h-5 text-blue-400 shrink-0 mt-0.5"></i>
           <p class="text-xs text-white/80 leading-relaxed">
-            Для прохождения верификации необходимо официальное приложение Google. 
-            Если оно у вас <strong class="text-white">не установлено</strong> — скачайте его (Шаг 1). 
-            Если уже установлено — сразу переходите к Шагу 2.
+            Для верификации вам потребуется включенный <strong class="text-white">VPN</strong> и одно из официальных приложений: 
+            <strong class="text-white">Google, Gmail или YouTube</strong>.
           </p>
         </div>
 
-        <!-- Step 1: Install Apps -->
-        <div class="bg-white/5 rounded-xl p-3 border border-white/5">
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-semibold mb-2 ml-1">Шаг 1: Установите приложение Google</p>
-          <div class="grid grid-cols-2 gap-3">
-            <a href="https://apps.apple.com/app/google/id284815942" target="_blank" class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg transition-colors text-xs text-white">
-              <i data-lucide="apple" class="w-4 h-4"></i> iOS
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox" target="_blank" class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg transition-colors text-xs text-white">
-              <i data-lucide="play" class="w-4 h-4"></i> Android
-            </a>
+        <!-- Step 1: Install -->
+        <div>
+          <button onclick="document.getElementById('step1-list').classList.toggle('hidden')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden border border-white/10">
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <i data-lucide="download" class="w-5 h-5 text-white/50"></i>
+              <span class="flex-1 text-left">Шаг 1: Скачать приложение</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-white/30"></i>
+            </div>
+          </button>
+          <div id="step1-list" class="hidden mt-2 space-y-2 p-3 bg-white/5 rounded-xl border border-white/5">
+            <!-- Google -->
+            <div class="flex items-center justify-between mb-2 pb-2 border-b border-white/5">
+              <span class="text-xs text-white/70">Google App</span>
+              <div class="flex gap-2">
+                <a href="https://apps.apple.com/app/google/id284815942" target="_blank" class="text-[10px] bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 rounded text-white">iOS</a>
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox" target="_blank" class="text-[10px] bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 rounded text-white">Android</a>
+              </div>
+            </div>
+            <!-- Gmail -->
+            <div class="flex items-center justify-between mb-2 pb-2 border-b border-white/5">
+              <span class="text-xs text-white/70">Gmail</span>
+              <div class="flex gap-2">
+                <a href="https://apps.apple.com/app/gmail/id422689480" target="_blank" class="text-[10px] bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 rounded text-white">iOS</a>
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.gm" target="_blank" class="text-[10px] bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 rounded text-white">Android</a>
+              </div>
+            </div>
+            <!-- YouTube -->
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-white/70">YouTube</span>
+              <div class="flex gap-2">
+                <a href="https://apps.apple.com/app/youtube/id544007664" target="_blank" class="text-[10px] bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 rounded text-white">iOS</a>
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.youtube" target="_blank" class="text-[10px] bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 rounded text-white">Android</a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="bg-purple-500/20 border border-purple-500/50 rounded-xl p-3 flex items-start gap-3">
-          <i data-lucide="shield" class="w-5 h-5 text-purple-400 shrink-0 mt-0.5"></i>
-          <p class="text-[11px] text-white/80 leading-relaxed">
-            <strong class="text-purple-400">Лайфхак:</strong> Если аккаунт иностранный, перед входом 
-            обязательно <strong class="text-white">включите любой VPN</strong> (например, 1.1.1.1), иначе Google выдаст системную ошибку при авторизации.
-          </p>
-        </div>
-
-        <!-- Step 2: Login to Google -->
-        <a href="googleapp://" target="_blank" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden group border border-white/10">
-          <div class="flex items-center gap-3 relative z-10 w-full">
-            <i data-lucide="log-in" class="w-5 h-5 text-accent"></i>
-            <span class="flex-1 text-left">Шаг 2: Войти в Google</span>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-white/30"></i>
+        <!-- Step 2: Login -->
+        <div>
+          <button onclick="document.getElementById('step2-list').classList.toggle('hidden')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden border border-white/10">
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <i data-lucide="log-in" class="w-5 h-5 text-accent"></i>
+              <span class="flex-1 text-left">Шаг 2: Войти в аккаунт</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-white/30"></i>
+            </div>
+          </button>
+          <div id="step2-list" class="hidden mt-2 grid grid-cols-1 gap-2 p-3 bg-white/5 rounded-xl border border-white/5">
+            <a href="googleapp://" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors">Войти через Google App</a>
+            <a href="googlegmail://" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors">Войти через Gmail</a>
+            <a href="youtube://" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors">Войти через YouTube</a>
           </div>
-        </a>
-
-        <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-3 flex items-start gap-3">
-          <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
-          <p class="text-xs text-white/80 leading-relaxed">
-            <strong class="text-red-400">ВАЖНО:</strong> Чтобы телефон не открыл YouTube, 
-            <strong class="text-white">зажмите</strong> кнопку ниже и выберите 
-            <strong class="text-white">«Открыть в новой вкладке»</strong>.
-          </p>
         </div>
-        
+
         <!-- Step 3: Verification -->
-        <a id="verify-link" href="#" target="_blank" class="btn-primary w-full flex items-center justify-center gap-2 p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group">
-          <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-          <span class="relative z-10">Шаг 3: Подтвердить вход</span>
-          <i data-lucide="check-circle" class="w-5 h-5 relative z-10"></i>
-        </a>
+        <div class="pt-2">
+          <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-3 mb-3 flex items-start gap-3">
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
+            <p class="text-[11px] text-white/80 leading-relaxed">
+              <strong class="text-red-400">ВАЖНО:</strong> При нажатии на кнопку ниже, 
+              <strong class="text-white">зажмите её</strong> и выберите 
+              <strong class="text-white">«Открыть в новой вкладке»</strong>.
+            </p>
+          </div>
+          <a id="verify-link" href="#" target="_blank" class="btn-primary w-full flex items-center justify-center gap-2 p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group">
+            <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+            <span class="relative z-10">Шаг 3: Верификация</span>
+            <i data-lucide="check-circle" class="w-5 h-5 relative z-10"></i>
+          </a>
+        </div>
       </div>
     </div>
   </div>
