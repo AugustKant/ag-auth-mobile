@@ -113,6 +113,30 @@
             </div>
           </button>
         </div>
+
+        <!-- TOTP Code Field -->
+        <div id="t-container" class="hidden space-y-8 pt-4">
+          <div class="h-px bg-white/10 w-full"></div>
+          
+          <div>
+            <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 flex items-center justify-between text-left">
+              <span>2FA Код</span>
+              <span id="totp-timer" class="text-[10px] text-accent font-mono">30s</span>
+            </label>
+            <div class="relative w-full h-1 bg-white/10 rounded-t-lg overflow-hidden mb-[-1px] z-20">
+               <div id="totp-progress" class="h-full bg-accent transition-all duration-1000 ease-linear" style="width: 100%"></div>
+            </div>
+            <button onclick="copyData('t')" class="btn-copy w-full flex items-center justify-between p-4 rounded-b-xl border border-white/5 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
+              <div class="flex items-center gap-3 relative z-10 w-full">
+                <i data-lucide="shield" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+                <span id="totp-text" class="text-white font-mono text-2xl tracking-[0.3em] text-left flex-1">------</span>
+                <div id="t-icon">
+                  <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Backup Section -->
@@ -170,28 +194,6 @@
         </div>
       </div>
 
-      <!-- TOTP Code Field -->
-      <div id="t-container" class="hidden space-y-8">
-        <div class="h-px bg-white/10 w-full"></div>
-        
-        <div>
-          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 flex items-center justify-between text-left">
-            <span>2FA Код</span>
-            <span id="totp-timer" class="text-[10px] text-accent font-mono">30s</span>
-          </label>
-          <div class="relative w-full h-1 bg-white/10 rounded-t-lg overflow-hidden mb-[-1px] z-20">
-             <div id="totp-progress" class="h-full bg-accent transition-all duration-1000 ease-linear" style="width: 100%"></div>
-          </div>
-          <button onclick="copyData('t')" class="btn-copy w-full flex items-center justify-between p-4 rounded-b-xl border border-white/5 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
-            <div class="flex items-center gap-3 relative z-10 w-full">
-              <i data-lucide="shield" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
-              <span id="totp-text" class="text-white font-mono text-2xl tracking-[0.3em] text-left flex-1">------</span>
-              <div id="t-icon">
-                <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
-              </div>
-            </div>
-          </button>
-        </div>
       </div>
 
       <!-- Verification Workflow -->
