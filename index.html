@@ -94,9 +94,20 @@
         </button>
       </div>
 
-      <!-- Firstmail Email Field -->
+      <!-- Webmail Provider Link -->
+      <div id="webmail-container" class="hidden">
+        <a id="webmail-link" href="#" target="_blank" class="w-full flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
+          <div class="flex items-center gap-3 relative z-10 w-full">
+            <i data-lucide="external-link" class="w-5 h-5 text-accent group-hover:scale-110 transition-transform"></i>
+            <span class="text-white text-left font-medium flex-1">Войти в почту <span id="webmail-name" class="font-bold text-accent"></span></span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+          </div>
+        </a>
+      </div>
+
+      <!-- Backup Email Field -->
       <div id="fe-container" class="hidden">
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Firstmail Email</label>
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Резервная почта</label>
         <button onclick="copyData('fe')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
           <div class="flex items-center gap-3 relative z-10 w-full">
             <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
@@ -108,9 +119,9 @@
         </button>
       </div>
 
-      <!-- Firstmail Pass Field -->
+      <!-- Backup Pass Field -->
       <div id="fp-container" class="hidden">
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Firstmail Пароль</label>
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Резервный Пароль</label>
         <button onclick="copyData('fp')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
           <div class="flex items-center gap-3 relative z-10 w-full">
             <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
@@ -230,7 +241,7 @@
     // Initialize icons
     lucide.createIcons();
 
-    let authData = { e: '', p: '', fe: '', fp: '', t: '', u: '' };
+    let authData = { e: '', p: '', fe: '', fp: '', t: '', u: '', h: '' };
     let currentTotpToken = '';
 
     function init() {
@@ -250,6 +261,21 @@
         if (authData.fp) {
           document.getElementById('fp-container').classList.remove('hidden');
         }
+
+        if (authData.h) {
+          let mailName = 'Webmail';
+          let mailUrl = 'https://firstmail.ltd/webmail/login';
+          if (authData.h.includes('mail.ru')) { mailName = 'Mail.ru'; mailUrl = 'https://e.mail.ru/login'; }
+          else if (authData.h.includes('yandex.ru')) { mailName = 'Яндекс'; mailUrl = 'https://mail.yandex.ru'; }
+          else if (authData.h.includes('rambler.ru')) { mailName = 'Rambler'; mailUrl = 'https://mail.rambler.ru'; }
+          else if (authData.h.includes('gmail.com')) { mailName = 'Google'; mailUrl = 'https://mail.google.com'; }
+          else if (authData.h.includes('firstmail.ltd')) { mailName = 'Firstmail'; mailUrl = 'https://firstmail.ltd/webmail/login'; }
+          
+          document.getElementById('webmail-name').textContent = mailName;
+          document.getElementById('webmail-link').href = mailUrl;
+          document.getElementById('webmail-container').classList.remove('hidden');
+        }
+
         if (authData.t) {
           document.getElementById('t-container').classList.remove('hidden');
           startTotpGenerator(authData.t);
@@ -269,7 +295,21 @@
       }
     }
 
-    function startTotpGenerator(secret) {
+    function startTotpGenerator(rawSecret) {
+      // Clean and extract secret if it's a URL like api2fa.com
+      let secret = rawSecret.trim();
+      if (secret.startsWith('http://') || secret.startsWith('https://')) {
+        try {
+          const url = new URL(secret);
+          const pathSegments = url.pathname.split('/').filter(Boolean);
+          if (pathSegments.length > 0) {
+            secret = pathSegments[pathSegments.length - 1];
+          }
+        } catch (e) {
+          // ignore parsing error
+        }
+      }
+
       // Create a new TOTP object
       let totp;
       try {
@@ -277,12 +317,16 @@
         if (secret.startsWith('otpauth://')) {
           totp = OTPAuth.URI.parse(secret);
         } else {
+          // Clean base32 string
+          const cleanSecret = secret.replace(/[^A-Za-z2-7]/gi, '').toUpperCase();
           totp = new OTPAuth.TOTP({
-            secret: OTPAuth.Secret.fromBase32(secret.replace(/\s+/g, '').toUpperCase())
+            secret: OTPAuth.Secret.fromBase32(cleanSecret)
           });
         }
       } catch (e) {
-        document.getElementById('totp-text').textContent = 'Ошибка';
+        document.getElementById('totp-text').textContent = '2FA Ошибка';
+        document.getElementById('totp-text').classList.remove('tracking-[0.3em]', 'text-2xl');
+        document.getElementById('totp-text').classList.add('text-lg', 'text-red-400');
         return;
       }
 
