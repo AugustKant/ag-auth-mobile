@@ -62,100 +62,110 @@
         <i data-lucide="smartphone" class="w-8 h-8 text-white/80"></i>
       </div>
       <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Мобильный Ассистент</h1>
-      <p class="text-white/50 text-sm">Скопируйте данные для авторизации</p>
-    </div>
-
-    <div class="space-y-4">
-      <!-- Email Field -->
-      <div>
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Google Email</label>
-        <button onclick="copyData('email')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
-          <div class="flex items-center gap-3 relative z-10 w-full">
-            <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
-            <span id="email-text" class="text-white text-left font-medium truncate flex-1"></span>
-            <div id="email-icon">
-              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
-            </div>
-          </div>
-        </button>
-      </div>
-
-      <!-- Password Field -->
-      <div>
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Пароль</label>
-        <button onclick="copyData('pass')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
-          <div class="flex items-center gap-3 relative z-10 w-full">
-            <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
-            <span id="pass-display" class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
-            <div class="flex items-center gap-3">
-              <div onclick="toggleVisibility('pass', event)" class="p-1 -m-1 text-white/40 hover:text-white transition-colors" title="Показать/скрыть">
-                <i id="pass-eye" data-lucide="eye" class="w-4 h-4"></i>
-              </div>
-              <div id="pass-icon">
+      <div class="space-y-6">
+      
+      <!-- Google Block -->
+      <div class="bg-[rgba(255,255,255,0.03)] backdrop-blur-md rounded-2xl border border-white/10 p-5 shadow-xl space-y-4">
+        <h2 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="chrome" class="w-4 h-4 text-accent"></i> Google
+        </h2>
+        
+        <!-- Email Field -->
+        <div>
+          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Email</label>
+          <button onclick="copyData('email')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-black/20 relative overflow-hidden group hover:bg-black/40 transition-colors">
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+              <span id="email-text" class="text-white text-left font-medium truncate flex-1"></span>
+              <div id="email-icon">
                 <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
               </div>
             </div>
-          </div>
-        </button>
-      </div>
+          </button>
+        </div>
 
-      <!-- Webmail Provider Link -->
-      <div id="webmail-container" class="hidden mt-2">
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Быстрый вход в резервную почту</label>
-        <a id="webmail-link" href="#" target="_blank" class="w-full flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
-          <div class="flex items-center gap-3 relative z-10 w-full">
-            <i data-lucide="external-link" class="w-5 h-5 text-accent group-hover:scale-110 transition-transform"></i>
-            <span class="text-white text-left font-medium flex-1">Войти в почту <span id="webmail-name" class="font-bold text-accent"></span></span>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
-          </div>
-        </a>
-      </div>
-
-      <!-- Backup Email Field -->
-      <div id="fe-container" class="hidden">
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Резервная почта</label>
-        <button onclick="copyData('fe')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
-          <div class="flex items-center gap-3 relative z-10 w-full">
-            <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
-            <span id="fe-text" class="text-white text-left font-medium truncate flex-1"></span>
-            <div id="fe-icon">
-              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
-            </div>
-          </div>
-        </button>
-      </div>
-
-      <!-- Backup Pass Field -->
-      <div id="fp-container" class="hidden">
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Резервный Пароль</label>
-        <button onclick="copyData('fp')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
-          <div class="flex items-center gap-3 relative z-10 w-full">
-            <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
-            <span id="fp-display" class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
-            <div class="flex items-center gap-3">
-              <div onclick="toggleVisibility('fp', event)" class="p-1 -m-1 text-white/40 hover:text-white transition-colors" title="Показать/скрыть">
-                <i id="fp-eye" data-lucide="eye" class="w-4 h-4"></i>
+        <!-- Password Field -->
+        <div>
+          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Пароль</label>
+          <button onclick="copyData('pass')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-black/20 relative overflow-hidden group hover:bg-black/40 transition-colors">
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+              <span id="pass-display" class="text-white/50 font-medium tracking-widest text-left flex-1 transition-all">••••••••••••</span>
+              <div class="flex items-center gap-3">
+                <div onclick="toggleVisibility('pass', event)" class="p-1 -m-1 text-white/40 hover:text-white transition-colors" title="Показать/скрыть">
+                  <i id="pass-eye" data-lucide="eye" class="w-4 h-4"></i>
+                </div>
+                <div id="pass-icon">
+                  <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+                </div>
               </div>
-              <div id="fp-icon">
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Backup Block -->
+      <div id="backup-block" class="bg-[rgba(255,255,255,0.03)] backdrop-blur-md rounded-2xl border border-white/10 p-5 shadow-xl space-y-4 hidden">
+        <h2 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="mail" class="w-4 h-4 text-accent"></i> Резервная почта
+        </h2>
+
+        <!-- Webmail Provider Link -->
+        <div id="webmail-container" class="hidden">
+          <a id="webmail-link" href="#" target="_blank" class="w-full flex items-center justify-between p-4 rounded-xl border border-accent/30 bg-accent/10 relative overflow-hidden group hover:bg-accent/20 transition-colors">
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <i data-lucide="external-link" class="w-5 h-5 text-accent group-hover:scale-110 transition-transform"></i>
+              <span class="text-white text-left font-medium flex-1">Войти в почту <span id="webmail-name" class="font-bold text-accent"></span></span>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Backup Email Field -->
+        <div id="fe-container" class="hidden">
+          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Email</label>
+          <button onclick="copyData('fe')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-black/20 relative overflow-hidden group hover:bg-black/40 transition-colors">
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+              <span id="fe-text" class="text-white text-left font-medium truncate flex-1"></span>
+              <div id="fe-icon">
                 <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
               </div>
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
+
+        <!-- Backup Pass Field -->
+        <div id="fp-container" class="hidden">
+          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Пароль</label>
+          <button onclick="copyData('fp')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-black/20 relative overflow-hidden group hover:bg-black/40 transition-colors">
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
+              <span id="fp-display" class="text-white/50 font-medium tracking-widest text-left flex-1 transition-all">••••••••••••</span>
+              <div class="flex items-center gap-3">
+                <div onclick="toggleVisibility('fp', event)" class="p-1 -m-1 text-white/40 hover:text-white transition-colors" title="Показать/скрыть">
+                  <i id="fp-eye" data-lucide="eye" class="w-4 h-4"></i>
+                </div>
+                <div id="fp-icon">
+                  <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
 
       <!-- TOTP Code Field -->
-      <div id="t-container" class="hidden">
+      <div id="t-container" class="bg-[rgba(255,255,255,0.03)] backdrop-blur-md rounded-2xl border border-white/10 p-5 shadow-xl hidden">
         <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 flex items-center justify-between">
-          <span>2FA Код</span>
+          <span class="flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4 text-accent"></i> 2FA Код</span>
           <span id="totp-timer" class="text-[10px] text-accent font-mono">30s</span>
         </label>
-        <div class="relative w-full h-1 bg-white/10 rounded-t-lg overflow-hidden mb-[-1px] z-20">
+        <div class="relative w-full h-1 bg-white/10 rounded-t-lg overflow-hidden mb-[-1px] z-20 mt-2">
            <div id="totp-progress" class="h-full bg-accent transition-all duration-1000 ease-linear" style="width: 100%"></div>
         </div>
-        <button onclick="copyData('t')" class="btn-copy w-full flex items-center justify-between p-4 rounded-b-xl border border-white/5 relative overflow-hidden group">
+        <button onclick="copyData('t')" class="btn-copy w-full flex items-center justify-between p-4 rounded-b-xl border border-white/5 bg-black/20 relative overflow-hidden group hover:bg-black/40 transition-colors">
           <div class="flex items-center gap-3 relative z-10 w-full">
-            <i data-lucide="shield" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
             <span id="totp-text" class="text-white font-mono text-2xl tracking-[0.3em] text-left flex-1">------</span>
             <div id="t-icon">
               <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
@@ -165,7 +175,7 @@
       </div>
 
       <!-- Verification Workflow -->
-      <div id="verify-container" class="hidden pt-6 mt-4 border-t border-white/10 space-y-4">
+      <div id="verify-container" class="hidden pt-2 space-y-4">
         
         <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-3 flex items-start gap-3">
           <i data-lucide="info" class="w-5 h-5 text-blue-400 shrink-0 mt-0.5"></i>
@@ -177,14 +187,14 @@
 
         <!-- Step 1: Install -->
         <div>
-          <button onclick="document.getElementById('step1-list').classList.toggle('hidden')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden border border-white/10">
+          <button onclick="document.getElementById('step1-list').classList.toggle('hidden')" class="btn-primary w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden group bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
             <div class="flex items-center gap-3 relative z-10 w-full">
               <i data-lucide="download" class="w-5 h-5 text-white/50"></i>
               <span class="flex-1 text-left">Шаг 1: Скачать приложение</span>
               <i data-lucide="chevron-down" class="w-4 h-4 text-white/30"></i>
             </div>
           </button>
-          <div id="step1-list" class="hidden mt-2 space-y-2 p-3 bg-white/5 rounded-xl border border-white/5">
+          <div id="step1-list" class="hidden mt-2 space-y-2 p-3 bg-[rgba(255,255,255,0.03)] backdrop-blur-md rounded-xl border border-white/10 shadow-xl">
             <!-- Google -->
             <div class="flex items-center justify-between mb-2 pb-2 border-b border-white/5">
               <span class="text-xs text-white/70">Google App</span>
@@ -214,14 +224,14 @@
 
         <!-- Step 2: Login -->
         <div>
-          <button onclick="document.getElementById('step2-list').classList.toggle('hidden')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden border border-white/10">
+          <button onclick="document.getElementById('step2-list').classList.toggle('hidden')" class="btn-primary w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-sm relative overflow-hidden group bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
             <div class="flex items-center gap-3 relative z-10 w-full">
               <i data-lucide="log-in" class="w-5 h-5 text-accent"></i>
               <span class="flex-1 text-left">Шаг 2: Войти в аккаунт</span>
               <i data-lucide="chevron-down" class="w-4 h-4 text-white/30"></i>
             </div>
           </button>
-          <div id="step2-list" class="hidden mt-2 grid grid-cols-1 gap-2 p-3 bg-white/5 rounded-xl border border-white/5">
+          <div id="step2-list" class="hidden mt-2 grid grid-cols-1 gap-2 p-3 bg-[rgba(255,255,255,0.03)] backdrop-blur-md rounded-xl border border-white/10 shadow-xl">
             <a href="googleapp://" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors">Войти через Google App</a>
             <a href="googlegmail://" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors">Войти через Gmail</a>
             <a href="youtube://" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors">Войти через YouTube</a>
@@ -229,16 +239,16 @@
         </div>
 
         <!-- Step 3: Verification -->
-        <div id="verify-container" class="hidden pt-2">
-          <button onclick="document.getElementById('step3-list').classList.toggle('hidden')" class="btn-primary w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group">
-            <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+        <div id="verify-step">
+          <button onclick="document.getElementById('step3-list').classList.toggle('hidden')" class="btn-primary w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group bg-accent/20 hover:bg-accent/30 border border-accent/50 transition-colors">
+            <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
             <div class="flex items-center gap-3 relative z-10 w-full">
               <span class="flex-1 text-left relative z-10">Шаг 3: Верификация</span>
               <i data-lucide="chevron-down" class="w-5 h-5 text-white/90 relative z-10"></i>
             </div>
           </button>
           
-          <div id="step3-list" class="hidden mt-2 grid grid-cols-1 gap-2 p-3 bg-white/5 rounded-xl border border-white/5">
+          <div id="step3-list" class="hidden mt-2 grid grid-cols-1 gap-2 p-3 bg-[rgba(255,255,255,0.03)] backdrop-blur-md rounded-xl border border-white/10 shadow-xl">
             <a id="verify-browser" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
               <i data-lucide="chrome" class="w-4 h-4"></i> В браузере
             </a>
