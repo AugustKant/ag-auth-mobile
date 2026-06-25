@@ -263,30 +263,17 @@
           </div>
         </div>
 
-        <!-- Step 3: Verification -->
-        <div id="verify-step">
-          <button onclick="document.getElementById('step3-list').classList.toggle('hidden')" class="btn-primary w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group bg-accent/20 hover:bg-accent/30 border border-accent/50 transition-colors">
-            <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-            <div class="flex items-center gap-3 relative z-10 w-full">
-              <span class="flex-1 text-left relative z-10">Шаг 3: Верификация</span>
-              <i data-lucide="chevron-down" class="w-5 h-5 text-white/90 relative z-10"></i>
-            </div>
-          </button>
-          
-          <div id="step3-list" class="hidden mt-2 grid grid-cols-1 gap-2 p-3 bg-[rgba(255,255,255,0.03)] backdrop-blur-md rounded-xl border border-white/10 shadow-xl">
-            <a id="verify-browser" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="chrome" class="w-4 h-4"></i> В браузере
-            </a>
-            <a id="verify-googleapp" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="smartphone" class="w-4 h-4"></i> В приложении Google App
-            </a>
-            <a id="verify-gmail" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="mail" class="w-4 h-4"></i> В приложении Gmail
-            </a>
-            <a id="verify-youtube" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="youtube" class="w-4 h-4"></i> В приложении YouTube
-            </a>
+        <!-- Step 3: Verification Instruction -->
+        <div id="verify-step" class="mt-6 p-6 rounded-2xl border border-white/5 bg-white/5 text-center">
+          <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="scan" class="w-6 h-6 text-accent"></i>
           </div>
+          <p class="text-white/70 text-sm leading-relaxed">
+            <span class="text-white font-medium text-base mb-2 block">Шаг 3: Верификация</span>
+            Когда автоматика дойдет до этапа верификации, <br>
+            <strong class="text-accent">отсканируйте второй QR-код</strong> с экрана монитора <br>
+            вашей стандартной камерой телефона.
+          </p>
         </div>
       </div>
     </div>
@@ -368,16 +355,8 @@
           startTotpGenerator(authData.t);
         }
         
-        if (authData.u) {
-          document.getElementById('verify-container').classList.remove('hidden');
-          const rawUrl = authData.u;
-          const urlWithoutHttp = rawUrl.replace(/^https?:\/\//, '');
-          
-          document.getElementById('verify-browser').href = rawUrl;
-          document.getElementById('verify-googleapp').href = 'googleapp://' + urlWithoutHttp;
-          document.getElementById('verify-gmail').href = 'googlegmail://' + urlWithoutHttp;
-          document.getElementById('verify-youtube').href = 'youtube://' + urlWithoutHttp;
-        }
+        // Always show the verification container so user can prepare
+        document.getElementById('verify-container').classList.remove('hidden');
 
         document.getElementById('app-container').classList.remove('hidden');
         
