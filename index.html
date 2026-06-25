@@ -229,20 +229,29 @@
         </div>
 
         <!-- Step 3: Verification -->
-        <div class="pt-2">
-          <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-3 mb-3 flex items-start gap-3">
-            <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
-            <p class="text-[11px] text-white/80 leading-relaxed">
-              <strong class="text-red-400">ВАЖНО:</strong> При нажатии на кнопку ниже, 
-              <strong class="text-white">зажмите её</strong> и выберите 
-              <strong class="text-white">«Открыть в новой вкладке»</strong>.
-            </p>
-          </div>
-          <a id="verify-link" href="#" target="_blank" class="btn-primary w-full flex items-center justify-center gap-2 p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group">
+        <div id="verify-container" class="hidden pt-2">
+          <button onclick="document.getElementById('step3-list').classList.toggle('hidden')" class="btn-primary w-full flex items-center justify-between p-4 rounded-xl text-white font-semibold text-lg relative overflow-hidden group">
             <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-            <span class="relative z-10">Шаг 3: Верификация</span>
-            <i data-lucide="check-circle" class="w-5 h-5 relative z-10"></i>
-          </a>
+            <div class="flex items-center gap-3 relative z-10 w-full">
+              <span class="flex-1 text-left relative z-10">Шаг 3: Верификация</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-white/90 relative z-10"></i>
+            </div>
+          </button>
+          
+          <div id="step3-list" class="hidden mt-2 grid grid-cols-1 gap-2 p-3 bg-white/5 rounded-xl border border-white/5">
+            <a id="verify-browser" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="chrome" class="w-4 h-4"></i> В браузере
+            </a>
+            <a id="verify-googleapp" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="smartphone" class="w-4 h-4"></i> В приложении Google App
+            </a>
+            <a id="verify-gmail" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="mail" class="w-4 h-4"></i> В приложении Gmail
+            </a>
+            <a id="verify-youtube" href="#" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 p-3 rounded-lg text-center text-white transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="youtube" class="w-4 h-4"></i> В приложении YouTube
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -317,7 +326,13 @@
         
         if (authData.u) {
           document.getElementById('verify-container').classList.remove('hidden');
-          document.getElementById('verify-link').href = authData.u;
+          const rawUrl = authData.u;
+          const urlWithoutHttp = rawUrl.replace(/^https?:\/\//, '');
+          
+          document.getElementById('verify-browser').href = rawUrl;
+          document.getElementById('verify-googleapp').href = 'googleapp://' + urlWithoutHttp;
+          document.getElementById('verify-gmail').href = 'googlegmail://' + urlWithoutHttp;
+          document.getElementById('verify-youtube').href = 'youtube://' + urlWithoutHttp;
         }
 
         document.getElementById('app-container').classList.remove('hidden');
