@@ -86,16 +86,22 @@
         <button onclick="copyData('pass')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
           <div class="flex items-center gap-3 relative z-10 w-full">
             <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
-            <span class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
-            <div id="pass-icon">
-              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+            <span id="pass-display" class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
+            <div class="flex items-center gap-3">
+              <div onclick="toggleVisibility('pass', event)" class="p-1 -m-1 text-white/40 hover:text-white transition-colors" title="Показать/скрыть">
+                <i id="pass-eye" data-lucide="eye" class="w-4 h-4"></i>
+              </div>
+              <div id="pass-icon">
+                <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+              </div>
             </div>
           </div>
         </button>
       </div>
 
       <!-- Webmail Provider Link -->
-      <div id="webmail-container" class="hidden">
+      <div id="webmail-container" class="hidden mt-2">
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Быстрый вход в резервную почту</label>
         <a id="webmail-link" href="#" target="_blank" class="w-full flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
           <div class="flex items-center gap-3 relative z-10 w-full">
             <i data-lucide="external-link" class="w-5 h-5 text-accent group-hover:scale-110 transition-transform"></i>
@@ -125,9 +131,14 @@
         <button onclick="copyData('fp')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 relative overflow-hidden group">
           <div class="flex items-center gap-3 relative z-10 w-full">
             <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
-            <span class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
-            <div id="fp-icon">
-              <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+            <span id="fp-display" class="text-white/50 font-medium tracking-widest text-left flex-1">••••••••••••</span>
+            <div class="flex items-center gap-3">
+              <div onclick="toggleVisibility('fp', event)" class="p-1 -m-1 text-white/40 hover:text-white transition-colors" title="Показать/скрыть">
+                <i id="fp-eye" data-lucide="eye" class="w-4 h-4"></i>
+              </div>
+              <div id="fp-icon">
+                <i data-lucide="copy" class="w-4 h-4 text-white/40"></i>
+              </div>
             </div>
           </div>
         </button>
@@ -243,6 +254,29 @@
 
     let authData = { e: '', p: '', fe: '', fp: '', t: '', u: '', h: '' };
     let currentTotpToken = '';
+
+    let showPass = false;
+    let showFp = false;
+
+    window.toggleVisibility = function(field, event) {
+      if (event) event.stopPropagation(); // Не копировать при клике на глаз
+      if (field === 'pass') {
+        showPass = !showPass;
+        document.getElementById('pass-display').textContent = showPass ? authData.p : '••••••••••••';
+        document.getElementById('pass-display').className = showPass 
+          ? "text-white text-left font-medium truncate flex-1 transition-all" 
+          : "text-white/50 font-medium tracking-widest text-left flex-1 transition-all";
+        document.getElementById('pass-eye').setAttribute('data-lucide', showPass ? 'eye-off' : 'eye');
+      } else if (field === 'fp') {
+        showFp = !showFp;
+        document.getElementById('fp-display').textContent = showFp ? authData.fp : '••••••••••••';
+        document.getElementById('fp-display').className = showFp 
+          ? "text-white text-left font-medium truncate flex-1 transition-all" 
+          : "text-white/50 font-medium tracking-widest text-left flex-1 transition-all";
+        document.getElementById('fp-eye').setAttribute('data-lucide', showFp ? 'eye-off' : 'eye');
+      }
+      lucide.createIcons();
+    };
 
     function init() {
       try {
