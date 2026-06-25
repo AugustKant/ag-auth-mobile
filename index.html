@@ -54,26 +54,34 @@
     <p class="text-white/60 mb-8 text-sm">Не удалось прочитать данные. Пожалуйста, отсканируйте QR-код заново.</p>
   </div>
 
-  <div id="app-container" class="hidden glass-panel p-6 max-w-sm w-full relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#6366f1] via-[#8b5cf6] to-[#ec4899]"></div>
+  <div id="app-container" class="hidden glass-panel max-w-sm w-full relative overflow-hidden">
+    <!-- Main Content wrapper -->
+  <div class="w-full max-w-sm mx-auto p-6 relative z-10 flex flex-col">
     
-    <div class="text-center mb-8 pt-2">
-      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 mb-4 shadow-inner border border-white/10">
-        <i data-lucide="smartphone" class="w-8 h-8 text-white/80"></i>
+    <!-- Top Header (Row layout) -->
+    <div class="flex items-center gap-4 mb-8 pt-4">
+      <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 shadow-inner border border-white/10 shrink-0">
+        <i data-lucide="smartphone" class="w-6 h-6 text-white/80"></i>
       </div>
-      <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Мобильный Ассистент</h1>
+      <div class="text-left">
+        <h1 class="text-xl font-bold text-white tracking-tight leading-tight">Мобильный Ассистент</h1>
+        <p class="text-white/50 text-xs mt-1">Данные для авторизации</p>
+      </div>
+    </div>
+
     <div class="space-y-4">
       
       <!-- Google Section -->
-      <div class="text-center pt-2">
-        <span class="text-white font-bold tracking-widest uppercase text-sm flex items-center justify-center gap-2">
+      <div class="flex items-center gap-3">
+        <span class="text-white/80 font-bold tracking-widest uppercase text-xs flex items-center gap-2">
           <i data-lucide="chrome" class="w-4 h-4 text-accent"></i> Google
         </span>
+        <div class="h-px bg-white/10 flex-1"></div>
       </div>
         
       <!-- Email Field -->
       <div>
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Email</label>
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block text-left">Email</label>
         <button onclick="copyData('email')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
           <div class="flex items-center gap-3 relative z-10 w-full">
             <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
@@ -87,7 +95,7 @@
 
       <!-- Password Field -->
       <div>
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Пароль</label>
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block text-left">Пароль</label>
         <button onclick="copyData('pass')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
           <div class="flex items-center gap-3 relative z-10 w-full">
             <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
@@ -105,12 +113,12 @@
       </div>
 
       <!-- Backup Section -->
-      <div id="backup-block" class="hidden space-y-4 pt-2">
-        <div class="border-t border-white/10 my-4"></div>
-        <div class="text-center">
-          <span class="text-white font-bold tracking-widest uppercase text-sm flex items-center justify-center gap-2">
+      <div id="backup-block" class="hidden space-y-4 pt-4">
+        <div class="flex items-center gap-3">
+          <span class="text-white/80 font-bold tracking-widest uppercase text-xs flex items-center gap-2">
             <i data-lucide="mail" class="w-4 h-4 text-accent"></i> Резервная почта
           </span>
+          <div class="h-px bg-white/10 flex-1"></div>
         </div>
 
         <!-- Webmail Provider Link -->
@@ -126,7 +134,7 @@
 
         <!-- Backup Email Field -->
         <div id="fe-container" class="hidden">
-          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Email</label>
+          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block text-left">Email</label>
           <button onclick="copyData('fe')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
             <div class="flex items-center gap-3 relative z-10 w-full">
               <i data-lucide="mail" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
@@ -140,7 +148,7 @@
 
         <!-- Backup Pass Field -->
         <div id="fp-container" class="hidden">
-          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block">Пароль</label>
+          <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 block text-left">Пароль</label>
           <button onclick="copyData('fp')" class="btn-copy w-full flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-colors">
             <div class="flex items-center gap-3 relative z-10 w-full">
               <i data-lucide="key-square" class="w-5 h-5 text-white/40 group-active:text-white transition-colors"></i>
@@ -159,10 +167,15 @@
       </div>
 
       <!-- TOTP Code Field -->
-      <div id="t-container" class="hidden pt-2">
-        <div class="border-t border-white/10 my-4"></div>
-        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 flex items-center justify-between">
-          <span class="flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4 text-accent"></i> 2FA Код</span>
+      <div id="t-container" class="hidden pt-4">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-white/80 font-bold tracking-widest uppercase text-xs flex items-center gap-2">
+            <i data-lucide="shield" class="w-4 h-4 text-accent"></i> 2FA Код
+          </span>
+          <div class="h-px bg-white/10 flex-1"></div>
+        </div>
+        <label class="text-xs font-medium text-white/50 uppercase tracking-wider ml-1 mb-1 flex items-center justify-between text-left">
+          <span>Одноразовый код</span>
           <span id="totp-timer" class="text-[10px] text-accent font-mono">30s</span>
         </label>
         <div class="relative w-full h-1 bg-white/10 rounded-t-lg overflow-hidden mb-[-1px] z-20 mt-2">
@@ -179,8 +192,13 @@
       </div>
 
       <!-- Verification Workflow -->
-      <div id="verify-container" class="hidden pt-2 space-y-4">
-        <div class="border-t border-white/10 my-4"></div>
+      <div id="verify-container" class="hidden pt-6 space-y-4">
+        <div class="flex items-center gap-3">
+          <span class="text-white/80 font-bold tracking-widest uppercase text-xs flex items-center gap-2">
+            <i data-lucide="check-circle" class="w-4 h-4 text-accent"></i> Верификация
+          </span>
+          <div class="h-px bg-white/10 flex-1"></div>
+        </div>
         
         <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-3 flex items-start gap-3">
           <i data-lucide="info" class="w-5 h-5 text-blue-400 shrink-0 mt-0.5"></i>
@@ -312,12 +330,16 @@
 
         document.getElementById('email-text').textContent = authData.e || 'Не указан';
         
+        let hasBackup = false;
+        
         if (authData.fe) {
           document.getElementById('fe-container').classList.remove('hidden');
           document.getElementById('fe-text').textContent = authData.fe;
+          hasBackup = true;
         }
         if (authData.fp) {
           document.getElementById('fp-container').classList.remove('hidden');
+          hasBackup = true;
         }
 
         if (authData.h) {
@@ -332,6 +354,11 @@
           document.getElementById('webmail-name').textContent = mailName;
           document.getElementById('webmail-link').href = mailUrl;
           document.getElementById('webmail-container').classList.remove('hidden');
+          hasBackup = true;
+        }
+
+        if (hasBackup) {
+          document.getElementById('backup-block').classList.remove('hidden');
         }
 
         if (authData.t) {
